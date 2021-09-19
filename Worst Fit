@@ -1,0 +1,26 @@
+#include<bits/stdc++.h> 
+using namespace std; 
+int main() 
+{ 
+ int avlblk[5], p, all[5], i; 
+ cout<<"Enter available blocks: "; 
+ for(i=0; i<=4; i++) 
+ { 
+ cin>>avlblk[i]; 
+ } 
+ cout<<"Enter the process to allocate: "; 
+ cin>>p; 
+ for(i=0; i<=4; i++) 
+ { 
+ if (p<=avlblk[i]) 
+ all[i]=avlblk[i]; 
+ else 
+ all[i]=-1; 
+ } 
+ sort(all, all+5);
+ if (all[4]!=-1) 
+ { 
+ cout<<"The process is allocated in: "<<all[4]<<" KB block.";  } 
+ else cout<<"The process is not allocated."; 
+ return 0; 
+} 
