@@ -1,0 +1,146 @@
+#include<bits/stdc++.h> 
+using namespace std; 
+#define siz2 100 
+#define siz 20 
+int alloc[siz][siz2], maxx[siz][siz2], need[siz][siz2]; 
+int total[siz2], available[siz2], avl[siz2], seq[siz],req[siz2]; 
+int P, R, reqi; 
+bool check(int n) 
+{ 
+ int i,j; 
+ for(i=0;i<R;i++) 
+ { 
+ if(available[i]<need[n][i]) return false; 
+ } 
+ return true; 
+} 
+void update(int n) 
+{
+ int i; 
+ for(i=0;i<R;i++) 
+ { 
+ available[i]+=alloc[n][i];  } 
+} 
+bool safety() 
+{ 
+ int m = P*P; 
+ int i,k=0,j=0; 
+ for(i=0;i<P;i++) seq[i]=-1;  bool out, ans; 
+ for(i=0;i<m&&k<P;i++)  { 
+ if(seq[j]<0) 
+ { 
+ out=check(j); 
+ if(out) { 
+ seq[j]=k++;  update(j); 
+ } 
+ } 
+ j++; 
+ j%=P; 
+ } 
+ for(i=0;i<R;i++) { 
+ available[i]=avl[i];  } 
+ if(k<P) return false; 
+ return true; 
+} 
+bool checkreq()
+{ 
+ int i,j; 
+ for(i=0;i<R;i++) 
+ { 
+ if(need[reqi][i]<req[i]) return false; 
+ if(available[i]<req[i]) return false; 
+ need[reqi][i]-=req[i]; 
+ available[i]-=req[i]; 
+ alloc[reqi][i]+=req[i]; 
+ } 
+ return true; 
+} 
+void request() 
+{ 
+ int i,j; 
+ if(!checkreq()) 
+ { 
+ cout<<"The request cannot be granted.\n";  return; 
+ } 
+ bool ans; 
+ ans=safety(); 
+ if(!ans) cout<<"The request cannot be granted\n";  else { 
+ cout<<"The request can be granted. Sequence: \n";  for(i=0;i<P;i++) 
+ { 
+ for(j=0;j<P;j++)
+ { 
+ if(seq[j]==i) { 
+ cout<<"P"<<j; 
+ if(i<P-1) cout<<" -> ";  else cout<<"\n"; 
+ break; 
+ } 
+ } 
+ } 
+ } 
+ return; 
+} 
+int main() 
+{ 
+ int i,j; 
+ cout<<"Enter the number of processes: ";  cin>>P; 
+ cout<<"Enter the number of resources: ";  cin>>R; 
+ for(i=0;i<R;i++) total[i]=0; 
+ cout<<"Enter the allocation matrix\n";  for(i=0;i<P;i++) 
+ { 
+ cout<<"P"<<i<<"\t"; 
+ for(j=0;j<R;j++) { 
+ cin>>alloc[i][j]; 
+ total[j]+=alloc[i][j]; 
+ } 
+ }
+ cout<<"Enter the max resources matrix\n"; 
+ for(i=0;i<P;i++) 
+ { 
+ cout<<"P"<<i<<"\t"; 
+ for(j=0;j<R;j++) cin>>maxx[i][j]; 
+ } 
+ cout<<"Enter the available matrix"; 
+ for(i=0;i<R;i++) { 
+ cin>>available[i]; 
+ total[i]+=available[i]; 
+ avl[i]=available[i]; 
+ } 
+ cout<<"Request for process : "; 
+ cin>>reqi; 
+ cout<<"Enter the request: "; 
+ for(i=0;i<R;i++) { 
+ cin>>req[i]; 
+ } 
+ cout<<"\n\n(a) The total number of resources of type are: \n";  for(i=0;i<R;i++) cout<<total[i]<<"\t"; 
+ cout<<"\n"; 
+ cout<<"\n(b) The need matrix is \n"; 
+ for(i=0;i<P;i++) 
+ { 
+ cout<<"P"<<i<<"\t"; 
+ for(j=0;j<R;j++) { 
+ need[i][j]=maxx[i][j]-alloc[i][j];
+ cout<<need[i][j]<<"\t"; 
+ } 
+ cout<<"\n"; 
+ } 
+ cout<<"\n\n(c) "; 
+ bool ans; 
+ ans=safety(); 
+ if(!ans) cout<<"The system is in unsafe state\n";  else { 
+ cout<<"The system is safe. Sequence: \n";  for(i=0;i<P;i++) 
+ { 
+ for(j=0;j<P;j++) 
+ { 
+ if(seq[j]==i) { 
+ cout<<"P"<<j; 
+ if(i<P-1) cout<<" -> "; 
+ else cout<<"\n"; 
+ break; 
+ } 
+ } 
+ } 
+ } 
+ cout<<"\n\n(d) "; 
+ request(); 
+ return 0; 
+} 
