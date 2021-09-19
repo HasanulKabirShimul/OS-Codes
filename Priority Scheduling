@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int n,twait=0;
+	double sum=0;
+	cin>>n;
+	int wait[n+5];
+	cout<<"Take the priority and burst time respectively as inputs: \n";
+	vector< pair < pair<int,int> , int > >v;
+	for(int i=0;i<n;i++)
+	{
+		int x,y;cin>>x>>y;
+		v.push_back(make_pair((make_pair(x,y)),i));
+	}
+	sort(v.rbegin(),v.rend());
+	cout<<"\n|";
+	for(int i=0;i<v.size();i++)
+	{
+		cout<<"P"<<v[i].second+1;
+		for(int j=0;j<v[i].first.second;j++)
+		{
+			cout<<".";
+		}
+		cout<<"|";
+		//cout<<v[i].first.first<<" "<<v[i].first.second<<" "<<v[i].second<<endl;
+	}
+	cout<<endl;
+	wait[0]=0;
+	cout<<"Individual waiting time : "<<endl<<"P"<<v[0].second+1<<" 0\n";
+	for(int i=1; i<v.size(); i++)
+	{
+		wait[i]=wait[i-1]+v[i-1].first.second;
+		sum+=wait[i];
+
+		cout<<"P"<<v[i].second+1<<" "<<wait[i]<<endl;
+	}
+	sum=(1.0*sum)/n;
+	cout<<"Average waiting time : "<<sum*1.0<<"\n\n\n";
+
+}
