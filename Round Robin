@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int n;cin>>n;
+	int total = 0,sum=0;
+	cout<<"Take the burst time as inputs:\n";
+	int wait[n+5],flag[n+5],orig[n+5];
+	for(int i=1;i<=n+5;i++) flag[i] = 0;
+	for(int i=1;i<=n;i++)
+	{
+		cin>>orig[i];
+		total += orig[i];
+	}
+	cout<<"|";
+	for(int i=1;sum<total;i++)
+	{
+		if(orig[i]>0)
+		{
+			cout<<"P"<<i<<".|";
+			orig[i]--;
+			sum++;
+		}
+		if(orig[i]==0 and flag[i]== false)
+		{
+			wait[i] = sum;
+			flag[i] = true;
+		}
+		if(i+1>n) i=0;
+	}
+	cout<<"\n";
+	int sum2 = 0;
+	cout<<"The individual waiting time is : \n" ;
+	for(int i=1;i<=n;i++){
+		cout<<"P"<<i<<" "<<wait[i]<<"\n";
+		sum2 += wait[i];
+	}
+	cout<<"The average waiting time is : ";
+	cout<<((sum2-sum)*1.0/n)<<"\n\n";
+}
