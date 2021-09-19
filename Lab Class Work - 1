@@ -1,0 +1,42 @@
+#include<iostream> 
+using namespace std; 
+int main() 
+{ 
+ int  
+i,j,k,l,m,n,bt[20],bt2[20],pri[20],art[20],wt[20],rt=0,highprio,curr,index,s um=0; 
+ float avg; 
+ cout<<"Enter Number of Processes : "; 
+ cin>>n; 
+ for(i=0;i<n;i++) 
+ { 
+ cout<<"\nEnter Burst Time, Priority and Arrival Time for P"<<i<<"  : "; 
+ cin>>bt[i]>>pri[i]>>art[i]; 
+ rt+=bt[i]; 
+ bt2[i]=bt[i]; 
+ } 
+ cout<<"|";
+ for(i=0;i<rt;i++) 
+ { 
+ highprio=INT_MAX; 
+ for(j=0;j<n;j++) 
+ { 
+ if(pri[j]<highprio && art[j]<=i) 
+ { 
+ highprio=pri[j]; 
+ index=j; 
+ } 
+ } 
+ printf("P%d|",index); 
+ bt[index]--; 
+ if(bt[index]==0) 
+ { 
+ wt[index]=i-art[index]-bt2[index]+1;  art[index]=INT_MAX; pri[index]=INT_MAX;  } 
+ } 
+ for(j=0;j<n;j++) 
+ { 
+ sum+=wt[j]; 
+ cout<<"\n Waiting Time for P"<<j<<" : "<<wt[j];  }
+ avg=1.0*sum/n; 
+ cout<<"\n\nAverage Waiting Time = "<<avg<<endl; 
+ return 0; 
+} 
