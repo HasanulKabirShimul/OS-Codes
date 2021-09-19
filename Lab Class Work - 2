@@ -1,0 +1,17 @@
+#include<bits/stdc++.h>
+using namespace std; 
+int main() 
+{ 
+ double TLB_HIT_RATIO,TLB_A_TIME,PM_A_TIME; 
+ cout<<"Enter TLB access time= "<<'\n'; 
+ cout<<'\n'; 
+ cin>>TLB_A_TIME; 
+ cout<<"Enter physical memory access time= "<<'\n'; 
+ cout<<'\n'; 
+ cin>>PM_A_TIME; 
+ cout<<"Enter TLB hit ratio = "<<'\n'; 
+ cout<<'\n'; 
+ cin>>TLB_HIT_RATIO; 
+ double result=(TLB_HIT_RATIO*TLB_A_TIME)+((1-TLB_HIT_RATIO)*PM_A_TIME);  cout<<"Effective memory access time = "<<result<<'\n'; 
+ return 0; 
+}
