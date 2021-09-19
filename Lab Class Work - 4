@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>  
+using namespace std;  
+void intobin(int num)  
+{  
+ int i;  
+ char out[1000];  
+ for(i=0;num>0;i++)  
+ {  
+ out[i]=num%2+'0';  
+ num/=2;  
+ }  
+ cout<<"0";  
+ for(i=i-1;i>=0;i--)  
+ cout<<out[i];  
+ return;  
+} 
+void intobinx(int n1, int n2)  
+{  
+ int i;  
+ char out1[1000],out2[1000];  
+ for(i=0;n1>0;i++)  
+ {  
+ out1[i]=n1%2+'0';  
+ n1/=2;  
+ }  
+ for(i=0;n2>0;i++)  
+ {  
+ out2[i]=n2%2+'0';  
+ n2/=2;  
+ }  
+ cout<<"0";  
+ for(i=i-1;i>=0;i--)  
+ {  
+ cout<<((out1[i]-'0')^(out2[i]-'0'));   }  
+ cout<<" ";  
+ return;  
+}  
+void bin(char str[20])  
+{  
+ int i,l,val;  
+ l=strlen(str);  
+ for(i=0;i<l;i++) 
+ {  
+ intobin(str[i]);  
+ cout<<" ";  
+ }  
+ return;  
+}  
+void ex(char s1[20], char s2[20])  {  
+ int l,i=0;  
+ l=strlen(s1);  
+ for(i=0;i<l;i++)  
+ {  
+ intobinx(s1[i],s2[i]);   }  
+ return;  
+}  
+int main()  
+{  
+ char Message[]="CRICKET";  
+ char Key[]="BATBALL";  
+ char out1[100],out2[100];  
+ cout<<"Binary of "<<Message<<" = ";   bin(Message);  
+ cout<<"\nBinary of "<<Key<<" = ";   bin(Key);  
+ cout<<"\n\n\nCipherText: ";   bin(Message); 
+ cout<<"\nex-or ";  
+ bin(Key);  
+ cout<<"\n = ";  
+ ex(Message,Key);  
+ return 0;  
+}  
